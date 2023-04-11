@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:async_redux/async_redux.dart';
 import 'package:recipe_app_flutter/api/api_service.dart';
 import 'package:recipe_app_flutter/state/action/actions.dart';
 import 'package:recipe_app_flutter/state/app_state.dart';
@@ -18,4 +21,23 @@ class GetRecipeAction extends LoadingAction {
 
     return state.copyWith(recipes: recipes);
   }
+}
+
+/// This action is responsible for setting the recipe details by the given index.
+class SetRecipeDetails extends ReduxAction<AppState> {
+  SetRecipeDetails({required this.recipeIndex});
+
+  final int recipeIndex;
+
+  @override
+  AppState reduce() {
+    final recipe = state.recipes[recipeIndex];
+    return state.copyWith(recipeDetails: recipe);
+  }
+}
+
+/// This action is responsible for disposing the state of the recipe details.
+class OnDisposeRecipeDetails extends ReduxAction<AppState> {
+  @override
+  AppState reduce() => state.copyWith(recipeDetails: null);
 }

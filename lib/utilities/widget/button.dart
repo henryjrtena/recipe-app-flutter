@@ -18,4 +18,34 @@ class Button {
       shape: const CircleBorder(),
     );
   }
+
+  static ButtonStyle leftBorderedRadius(bool isActive) {
+    return ElevatedButton.styleFrom(
+      elevation: 0,
+      backgroundColor: isActive ? primaryColor : white,
+      padding: const EdgeInsets.all(10.0),
+      side: const BorderSide(width: 1.0, color: lightGrey),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15.0),
+          bottomLeft: Radius.circular(15.0),
+        ),
+      ),
+    );
+  }
+
+  static ButtonStyle rightBorderedRadius(bool isActive) {
+    return ElevatedButton.styleFrom(
+      elevation: 0,
+      backgroundColor: isActive ? primaryColor : white,
+      padding: const EdgeInsets.all(10.0),
+      side: const BorderSide(width: 1.0, color: lightGrey),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(15.0),
+          bottomRight: Radius.circular(15.0),
+        ),
+      ),
+    );
+  }
 }
