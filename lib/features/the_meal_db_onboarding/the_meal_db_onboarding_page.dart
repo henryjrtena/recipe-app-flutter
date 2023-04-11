@@ -1,8 +1,8 @@
-import 'package:recipe_app_flutter/features/the_meal_db_overview/the_meal_db_overview_connector.dart';
 import 'package:recipe_app_flutter/utilities/colors.dart';
-import 'package:recipe_app_flutter/utilities/spacing.dart';
-import 'package:flutter/material.dart';
+import 'package:recipe_app_flutter/utilities/string_constant.dart';
 import 'package:recipe_app_flutter/utilities/widget/button.dart';
+import 'package:recipe_app_flutter/features/the_meal_db_overview/the_meal_db_overview_connector.dart';
+import 'package:flutter/material.dart';
 
 class TheMealDBApiOnboardingPage extends StatelessWidget {
   const TheMealDBApiOnboardingPage({super.key});
@@ -14,7 +14,7 @@ class TheMealDBApiOnboardingPage extends StatelessWidget {
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/jpeg/onboarding.jpeg'),
+              image: AssetImage(onBoardingSource),
               fit: BoxFit.cover,
             ),
           ),
@@ -31,51 +31,36 @@ class TheMealDBApiOnboardingPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  children: const [
-                    Text(
-                      'Welcome to the\r\n Recipe App',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 35.0,
-                        fontWeight: FontWeight.bold,
-                        color: white,
-                      ),
-                    ),
-                  ],
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Text(
+                    welcomeRecipeAppLabel,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
                 ),
-                Column(
+                Wrap(
+                  runSpacing: 20.0,
                   children: [
-                    const Text(
-                      'Did you know that Italian\r\n food is the most popular\r\n around the world?',
+                    Text(
+                      triviaText,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 28.0,
-                        fontWeight: FontWeight.bold,
-                        color: white,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(color: white),
                     ),
-                    const VerticalSpacing(height: 20.0),
-                    const Text(
-                      'Italian pizza in particular is very\r\n popular and long ago crossed the\r\n borders of Italy. It is now consumed all\r\n over the world.',
+                    Text(
+                      triviaTextAnswer,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white70,
-                      ),
+                      style: Theme.of(context).textTheme.labelSmall,
                     ),
-                    const VerticalSpacing(height: 20.0),
                     ElevatedButton(
                       style: Button.fluidButton(),
                       onPressed: () => _navigateToOverviewPage(context),
-                      child: const Text(
-                        'Get Started',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                          color: white,
-                        ),
+                      child: Text(
+                        getStartedLabel,
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: white,
+                            ),
                       ),
                     )
                   ],
