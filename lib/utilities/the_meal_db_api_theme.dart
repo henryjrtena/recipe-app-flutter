@@ -1,5 +1,4 @@
 import 'package:recipe_app_flutter/utilities/colors.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 class TheMealDBApiTheme {
@@ -12,30 +11,36 @@ class TheMealDBApiTheme {
     );
   }
 
-  static TextTheme textTheme = TextTheme(
-    headlineLarge: GoogleFonts.inter(
+  static TextTheme textTheme = const TextTheme(
+    headlineLarge: TextStyle(
+      fontFamily: 'Inter',
       fontSize: 35.0,
       fontWeight: FontWeight.bold,
       color: white,
     ),
-    titleLarge: GoogleFonts.inter(
+    titleLarge: TextStyle(
+      fontFamily: 'Inter',
       fontSize: 27.0,
       fontWeight: FontWeight.w700,
       color: primaryColor,
     ),
-    titleMedium: GoogleFonts.inter(
+    titleMedium: TextStyle(
+      fontFamily: 'Inter',
       fontWeight: FontWeight.w700,
       fontSize: 24.0,
     ),
-    titleSmall: GoogleFonts.inter(
+    titleSmall: TextStyle(
+      fontFamily: 'Inter',
       fontSize: 20.0,
     ),
-    labelSmall: GoogleFonts.inter(
+    labelSmall: TextStyle(
+      fontFamily: 'Inter',
       fontWeight: FontWeight.bold,
       color: Colors.white70,
       fontSize: 15.0,
     ),
-    bodyLarge: GoogleFonts.inter(
+    bodyLarge: TextStyle(
+      fontFamily: 'Inter',
       fontSize: 25.0,
     ),
   );

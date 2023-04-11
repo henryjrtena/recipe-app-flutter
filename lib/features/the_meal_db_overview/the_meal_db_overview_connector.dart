@@ -11,7 +11,10 @@ class TheMealDBApiOverviewConnector extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, TheMealDBApiOverviewVm>(
       vm: () => TheMealDBApiOverviewVmFactory(),
-      builder: (_, vm) => TheMealDBApiOverviewPage(recipes: vm.recipes),
+      builder: (_, vm) => TheMealDBApiOverviewPage(
+        recipes: vm.recipes,
+        onGetRecipe: vm.onGetRecipeAction,
+      ),
     );
   }
 }

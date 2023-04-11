@@ -12,7 +12,7 @@ class TheMealDBApi {
   final ApiClient apiClient;
   final Uri baseUri;
 
-  Future<List<Recipe>> searchRecipe({
+  Future<Recipe> getRecipe({
     required String mealName,
   }) async {
     final queryParameters = <String, dynamic>{};
@@ -22,7 +22,7 @@ class TheMealDBApi {
     final uri = baseUri.replace(queryParameters: queryParameters, path: baseUri.path);
 
     return await apiClient.dio.getUri(uri).then((response) {
-      return response.data['meals'].map<Recipe>((dynamic data) => Recipe.fromJson(data as Json)).toList();
+      return response.data['meals'].map<Recipe>((dynamic data) => Recipe.fromJson(data as Json)).toList().first;
     });
   }
 }

@@ -10,10 +10,12 @@ import 'package:flutter/material.dart';
 class TheMealDBApiOverviewPage extends StatefulWidget {
   const TheMealDBApiOverviewPage({
     required this.recipes,
+    required this.onGetRecipe,
     Key? key,
   }) : super(key: key);
 
   final List<Recipe> recipes;
+  final Function(String) onGetRecipe;
 
   @override
   State<TheMealDBApiOverviewPage> createState() => _TheMealDBApiOverviewPageState();
@@ -21,13 +23,22 @@ class TheMealDBApiOverviewPage extends StatefulWidget {
 
 class _TheMealDBApiOverviewPageState extends State<TheMealDBApiOverviewPage> {
   late final TextEditingController searchController;
-  late final bool isRecipesNotEmpty;
 
   @override
   void initState() {
     super.initState();
     searchController = TextEditingController();
-    isRecipesNotEmpty = widget.recipes.isNotEmpty;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant TheMealDBApiOverviewPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -65,30 +76,35 @@ class _TheMealDBApiOverviewPageState extends State<TheMealDBApiOverviewPage> {
                 margin: const EdgeInsets.only(top: 20.0, bottom: 40.0),
                 child: MealDBTextField(controller: searchController),
               ),
-              const VerticalSpacing(height: 20.0),
-              isRecipesNotEmpty
+              widget.recipes.isNotEmpty
                   ? Expanded(
-                      child: Column(children: [
-                        Text(
-                          yourRecipesLabel,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        ListView.separated(
-                          separatorBuilder: (_, __) => const VerticalSpacing(height: 20.0),
-                          itemBuilder: (_, index) {
-                            final recipe = widget.recipes[index];
-                            return RecipeCard(recipe: recipe);
-                          },
-                          itemCount: widget.recipes.length,
-                        )
-                      ]),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            yourRecipesLabel,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          const VerticalSpacing(height: 20.0),
+                          Expanded(
+                            child: ListView.separated(
+                              separatorBuilder: (_, __) => const VerticalSpacing(height: 20.0),
+                              itemBuilder: (_, index) {
+                                final recipe = widget.recipes[index];
+                                return RecipeCard(recipe: recipe);
+                              },
+                              itemCount: widget.recipes.length,
+                            ),
+                          )
+                        ],
+                      ),
                     )
                   : EmptyRecipesView(onAddRecipe: _showAddRecipeForm)
             ],
           ),
         ),
       ),
-      floatingActionButton: isRecipesNotEmpty
+      floatingActionButton: widget.recipes.isNotEmpty
           ? FloatingActionButton(
               onPressed: _showAddRecipeForm,
               child: const Icon(
@@ -105,7 +121,12 @@ class _TheMealDBApiOverviewPageState extends State<TheMealDBApiOverviewPage> {
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30.0))),
-      builder: (_) => const AddRecipeModalForm(),
+      builder: (_) => AddRecipeModalForm(
+        onGetRecipe: widget.onGetRecipe,
+        recipes: _getAllRecipeName(),
+      ),
     );
   }
+
+  List<String> _getAllRecipeName() => widget.recipes.map((recipe) => recipe.strMeal.toLowerCase()).toList();
 }

@@ -1,12 +1,20 @@
 import 'package:recipe_app_flutter/features/the_meal_db_overview/widgets/search_recipe_textfield.dart';
 import 'package:recipe_app_flutter/utilities/colors.dart';
+import 'package:recipe_app_flutter/utilities/constant.dart';
 import 'package:recipe_app_flutter/utilities/spacing.dart';
 import 'package:recipe_app_flutter/utilities/string_constant.dart';
 import 'package:recipe_app_flutter/utilities/widget/button.dart';
 import 'package:flutter/material.dart';
 
 class AddRecipeModalForm extends StatefulWidget {
-  const AddRecipeModalForm({super.key});
+  const AddRecipeModalForm({
+    required this.onGetRecipe,
+    required this.recipes,
+    super.key,
+  });
+
+  final Function(String) onGetRecipe;
+  final List<String> recipes;
 
   @override
   State<AddRecipeModalForm> createState() => _AddRecipeModalFormState();
@@ -62,7 +70,7 @@ class _AddRecipeModalFormState extends State<AddRecipeModalForm> {
           const VerticalSpacing(height: 50.0),
           ElevatedButton(
             style: Button.fluidButton(),
-            onPressed: () {},
+            onPressed: _onAddRecipe,
             child: Text(
               addMealLabel,
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -77,8 +85,29 @@ class _AddRecipeModalFormState extends State<AddRecipeModalForm> {
     );
   }
 
+  void _showErrorMessageSnackbar(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _onAddRecipe() {
+    final mealName = addRecipeController.text.toLowerCase();
+    if (widget.recipes.contains(mealName)) {
+      _dismissModelSheetForm();
+      _showErrorMessageSnackbar(mealNameAlreadyExistMessage);
+      return;
+    }
+    if (!listOfAllowedRecipe.contains(mealName)) {
+      _dismissModelSheetForm();
+      _showErrorMessageSnackbar(mealNameInvalidMessage);
+      return;
+    }
+    widget.onGetRecipe(mealName);
+    _dismissModelSheetForm();
+  }
+
   void _dismissModelSheetForm() {
-    Navigator.pop(context);
     FocusManager.instance.primaryFocus?.unfocus();
+    Navigator.pop(context);
   }
 }

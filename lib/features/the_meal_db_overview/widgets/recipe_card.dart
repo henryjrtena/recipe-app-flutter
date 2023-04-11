@@ -1,5 +1,4 @@
 import 'package:recipe_app_flutter/utilities/colors.dart';
-import 'package:recipe_app_flutter/utilities/string_constant.dart';
 import 'package:recipe_app_flutter/api/model/recipe.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +37,7 @@ class RecipeCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                categoryLabel,
+                recipe.strCategory,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: Colors.white70,
                       fontWeight: FontWeight.w500,
@@ -47,7 +46,7 @@ class RecipeCard extends StatelessWidget {
               Text(
                 recipe.strMeal,
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Colors.white70,
+                      color: white,
                       fontWeight: FontWeight.w500,
                     ),
               ),
