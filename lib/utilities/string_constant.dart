@@ -1,3 +1,4 @@
+const emptyString = "";
 const avatarSource = 'assets/jpeg/me.jpg';
 const noRecipesSVGSource = 'assets/svg/make-it-your-own-way.svg';
 const onBoardingSource = 'assets/jpeg/onboarding.jpeg';
