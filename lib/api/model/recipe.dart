@@ -1,4 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:recipe_app_flutter/api/model/ingredient.dart';
+import 'package:recipe_app_flutter/utilities/string_constant.dart';
 
 part 'recipe.freezed.dart';
 part 'recipe.g.dart';
@@ -15,7 +17,8 @@ class Recipe with _$Recipe {
     @JsonKey(name: 'strTags') required String? strTags,
     @JsonKey(name: 'strYoutube') required String strYoutube,
     @JsonKey(name: 'strSource') required String? strSource,
-    @JsonKey(ignore: true) @Default("") String note,
+    @JsonKey(name: 'ingredients') @Default(<Ingredient>[]) List<Ingredient> ingredients,
+    @JsonKey(ignore: true) @Default(emptyString) String note,
   }) = _Recipe;
 
   factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);

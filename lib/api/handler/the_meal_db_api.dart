@@ -21,8 +21,25 @@ class TheMealDBApi {
 
     final uri = baseUri.replace(queryParameters: queryParameters, path: baseUri.path);
 
-    return await apiClient.dio.getUri(uri).then((response) {
-      return response.data['meals'].map<Recipe>((dynamic data) => Recipe.fromJson(data as Json)).toList().first;
-    });
+    final response = await apiClient.dio.getUri(uri);
+
+    final recipe = response.data['meals'][0] as Json;
+
+    final List<Map<String, dynamic>> ingredientsAndMeasures = List.empty(growable: true);
+    for (var x = 1; x < 20; x++) {
+      final String ingredient = response.data['meals'][0]['strIngredient$x'];
+      final String measure = response.data['meals'][0]['strMeasure$x'];
+
+      if (ingredient.isEmpty) break;
+
+      ingredientsAndMeasures.add({
+        'name': ingredient,
+        'measure': measure,
+      });
+    }
+
+    recipe['ingredients'] = ingredientsAndMeasures;
+
+    return Recipe.fromJson(recipe);
   }
 }
