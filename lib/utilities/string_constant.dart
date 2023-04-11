@@ -26,3 +26,6 @@ const enterYourMealHereLabel = 'Enter your Meal here...';
 const mealLabel = 'Meal';
 const addMealLabel = "Add Meal";
 const categoryLabel = 'Category';
+
+const mealNameAlreadyExistMessage = 'A meal with the same name already exists.';
+const mealNameInvalidMessage = 'The name of the meal provided is not valid.';
