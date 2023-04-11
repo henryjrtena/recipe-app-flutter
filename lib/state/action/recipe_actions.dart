@@ -2,7 +2,7 @@ import 'package:recipe_app_flutter/api/api_service.dart';
 import 'package:recipe_app_flutter/state/action/actions.dart';
 import 'package:recipe_app_flutter/state/app_state.dart';
 
-/// ReduxAction for reques
+/// This is responsible for executing the action of fetching a recipe and updating the application state accordingly.
 class GetRecipeAction extends LoadingAction {
   static const key = "get-recipe-action";
 
