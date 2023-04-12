@@ -10,6 +10,7 @@ class AppState with _$AppState {
   factory AppState({
     @Default(<Recipe>[]) List<Recipe> recipes,
     @Default(<Recipe>[]) List<Recipe> searchedRecipes,
+    @Default(null) Recipe? recipeDetails,
 
     // ignored by state
     @Default(Wait.empty) @JsonKey(ignore: true) Wait wait,

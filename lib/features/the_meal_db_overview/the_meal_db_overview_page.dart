@@ -91,7 +91,10 @@ class _TheMealDBApiOverviewPageState extends State<TheMealDBApiOverviewPage> {
                               separatorBuilder: (_, __) => const VerticalSpacing(height: 20.0),
                               itemBuilder: (_, index) {
                                 final recipe = widget.recipes[index];
-                                return RecipeCard(recipe: recipe);
+                                return RecipeCard(
+                                  recipe: recipe,
+                                  recipeIndex: index,
+                                );
                               },
                               itemCount: widget.recipes.length,
                             ),

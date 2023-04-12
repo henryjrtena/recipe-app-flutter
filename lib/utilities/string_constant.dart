@@ -30,3 +30,14 @@ const categoryLabel = 'Category';
 
 const mealNameAlreadyExistMessage = 'A meal with the same name already exists.';
 const mealNameInvalidMessage = 'The name of the meal provided is not valid.';
+
+// Todo: To be remove
+const dummyText =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a felis cursus, auctor felis quis, dapibus est.';
+
+const notesLabel = 'Notes';
+const updateNotesLabel = 'Update Notes';
+const ingredientsLabel = 'Ingredients';
+const recipeLabel = 'Recipe';
+const instructionsLabel = 'Instructions';
+const mainLabel = 'Main';

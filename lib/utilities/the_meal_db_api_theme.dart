@@ -5,6 +5,8 @@ class TheMealDBApiTheme {
   static ThemeData main() {
     return ThemeData(
       textTheme: textTheme,
+      scaffoldBackgroundColor: white,
+      inputDecorationTheme: const InputDecorationTheme(labelStyle: TextStyle(fontSize: 16.0)),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: primaryColor,
       ),
@@ -42,6 +44,10 @@ class TheMealDBApiTheme {
     bodyLarge: TextStyle(
       fontFamily: 'Inter',
       fontSize: 25.0,
+    ),
+    bodyMedium: TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 17.0,
     ),
   );
 }
