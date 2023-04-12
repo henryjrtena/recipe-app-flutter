@@ -1,3 +1,5 @@
+const primaryFont = 'Inter';
+
 const listOfAllowedRecipe = [
   'sushi',
   'fettuccine alfredo',
@@ -19,3 +21,5 @@ const listOfAllowedRecipe = [
   'wontons',
   'tonkatsu pork',
 ];
+
+const noHeight = 0.0;

@@ -7,6 +7,7 @@ const white = Colors.white;
 const grey = Colors.grey;
 const lightGrey = Color.fromRGBO(245, 245, 245, 1);
 const black = Colors.black;
+const lightBlack = Colors.black54;
 
 const onboardingBlackGradient = [
   Color.fromRGBO(0, 0, 0, 0.7),

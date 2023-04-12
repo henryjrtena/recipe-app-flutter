@@ -8,7 +8,9 @@ class TheMealDBApiOverviewVmFactory extends VmFactory<AppState, TheMealDBApiOver
   @override
   Vm fromStore() => TheMealDBApiOverviewVm(
         recipes: _getRecipes,
+        searchedRecipes: _getSearchedRecipes,
         onGetRecipeAction: _onGetRecipeAction,
+        onSearchedRecipeAction: _onSearchedRecipeAction,
       );
 
   List<Recipe> get _getRecipes {
@@ -16,15 +18,29 @@ class TheMealDBApiOverviewVmFactory extends VmFactory<AppState, TheMealDBApiOver
     return state.recipes;
   }
 
+  List<Recipe> get _getSearchedRecipes {
+    if (state.recipes.isEmpty) return List.empty();
+    return state.searchedRecipes;
+  }
+
   void _onGetRecipeAction(String mealName) => dispatchAsync(GetRecipeAction(mealName: mealName));
+
+  void _onSearchedRecipeAction(String searchText) => dispatchAsync(OnSearchRecipeAction(searchText: searchText));
 }
 
 class TheMealDBApiOverviewVm extends Vm {
   TheMealDBApiOverviewVm({
     required this.recipes,
+    required this.searchedRecipes,
     required this.onGetRecipeAction,
-  }) : super(equals: [recipes]);
+    required this.onSearchedRecipeAction,
+  }) : super(equals: [
+          recipes,
+          searchedRecipes,
+        ]);
 
   final List<Recipe> recipes;
+  final List<Recipe> searchedRecipes;
   final Function(String) onGetRecipeAction;
+  final Function(String) onSearchedRecipeAction;
 }

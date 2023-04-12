@@ -39,13 +39,12 @@ class _AddRecipeModalFormState extends State<AddRecipeModalForm> {
         children: [
           Align(
             alignment: Alignment.topRight,
-            child: ElevatedButton(
-              style: Button.circleAddButton(color: secondaryColor),
-              onPressed: _dismissModelSheetForm,
+            child: GestureDetector(
+              onTap: _dismissModelSheetForm,
               child: const Icon(
-                Icons.close,
-                color: white,
-                size: 40.0,
+                Icons.cancel,
+                color: secondaryColor,
+                size: 50.0,
               ),
             ),
           ),

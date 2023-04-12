@@ -69,3 +69,18 @@ class OnDeleteRecipeAction extends ReduxAction<AppState> {
     return state.copyWith(recipes: recipes);
   }
 }
+
+// This Action performs a filter on the recipe using the provided search criteria.
+class OnSearchRecipeAction extends ReduxAction<AppState> {
+  OnSearchRecipeAction({required this.searchText});
+
+  final String searchText;
+
+  @override
+  AppState reduce() {
+    final searchedPokemons =
+        state.recipes.where((recipe) => recipe.strMeal.toLowerCase().contains(searchText.toLowerCase())).toList();
+
+    return state.copyWith(searchedRecipes: searchedPokemons);
+  }
+}

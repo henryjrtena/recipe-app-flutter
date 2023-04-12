@@ -43,3 +43,6 @@ const deleteLabel = 'Delete';
 const cancelLabel = 'Cancel';
 
 const deleteMessageConfirmation = 'Click "Delete" or "Cancel" to proceed.';
+
+const yourResultsLabel = 'Your Results';
+const yourRecipeLabel = 'Your Recipes';
