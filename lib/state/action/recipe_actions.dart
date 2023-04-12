@@ -24,8 +24,8 @@ class GetRecipeAction extends LoadingAction {
 }
 
 /// This action is responsible for setting the recipe details by the given index.
-class SetRecipeDetails extends ReduxAction<AppState> {
-  SetRecipeDetails({required this.recipeIndex});
+class SetRecipeDetailsAction extends ReduxAction<AppState> {
+  SetRecipeDetailsAction({required this.recipeIndex});
 
   final int recipeIndex;
 
@@ -37,7 +37,25 @@ class SetRecipeDetails extends ReduxAction<AppState> {
 }
 
 /// This action is responsible for disposing the state of the recipe details.
-class OnDisposeRecipeDetails extends ReduxAction<AppState> {
+class OnDisposeRecipeDetailsAction extends ReduxAction<AppState> {
   @override
   AppState reduce() => state.copyWith(recipeDetails: null);
+}
+
+/// This action is responsible for updating the notes of a recipe.
+class OnUpdateRecipeNotesAction extends ReduxAction<AppState> {
+  OnUpdateRecipeNotesAction({required this.recipeNote});
+
+  final String recipeNote;
+
+  @override
+  AppState reduce() {
+    final recipes = [...state.recipes];
+
+    final recipeIndex = recipes.indexOf(state.recipeDetails!);
+
+    recipes[recipeIndex] = recipes[recipeIndex].copyWith(note: recipeNote);
+
+    return state.copyWith(recipes: recipes, recipeDetails: recipes[recipeIndex]);
+  }
 }

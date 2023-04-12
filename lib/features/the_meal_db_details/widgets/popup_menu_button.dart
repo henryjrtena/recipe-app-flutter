@@ -1,42 +1,48 @@
-import 'package:flutter/material.dart';
+import 'package:recipe_app_flutter/utilities/action_enum.dart';
 import 'package:recipe_app_flutter/utilities/colors.dart';
-
-enum Action { edit, delete }
+import 'package:recipe_app_flutter/utilities/string_constant.dart';
+import 'package:flutter/material.dart';
 
 class PopUpMenuButton extends StatelessWidget {
-  const PopUpMenuButton({Key? key, required this.setIsReadyOnly,}) : super(key: key);
+  const PopUpMenuButton({
+    required this.setIsReadyOnly,
+    Key? key,
+  }) : super(key: key);
 
   final ValueChanged<bool> setIsReadyOnly;
 
   @override
   Widget build(BuildContext context) {
-    Action? actionMenu;
+    RecipeAction? actionMenu;
 
-    return PopupMenuButton<Action>(
+    return PopupMenuButton<RecipeAction>(
       color: primaryColor,
       offset: Offset.fromDirection(0, -50),
       initialValue: actionMenu,
-      onSelected: (Action item) {
-        if (item == Action.edit) setIsReadyOnly(false);
+      onSelected: (RecipeAction item) {
+        if (item == RecipeAction.edit) setIsReadyOnly(false);
       },
       child: Container(
         padding: const EdgeInsets.all(10),
-        decoration: const BoxDecoration(shape: BoxShape.circle, color: primaryColor),
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: primaryColor,
+        ),
         child: const Icon(
           Icons.more_vert,
           color: white,
         ),
       ),
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<Action>>[
-        PopupMenuItem<Action>(
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<RecipeAction>>[
+        PopupMenuItem<RecipeAction>(
           textStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(color: white),
-          value: Action.edit,
-          child: const Text('Edit'),
+          value: RecipeAction.edit,
+          child: const Text(editLabel),
         ),
-        PopupMenuItem<Action>(
+        PopupMenuItem<RecipeAction>(
           textStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(color: white),
-          value: Action.delete,
-          child: const Text('Delete'),
+          value: RecipeAction.delete,
+          child: const Text(deleteLabel),
         ),
       ],
     );
