@@ -12,8 +12,11 @@ class CardContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: lightGrey,
       padding: const EdgeInsets.all(20.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: lightGrey,
+      ),
       child: child,
     );
   }

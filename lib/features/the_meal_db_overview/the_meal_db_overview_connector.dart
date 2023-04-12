@@ -13,7 +13,9 @@ class TheMealDBApiOverviewConnector extends StatelessWidget {
       vm: () => TheMealDBApiOverviewVmFactory(),
       builder: (_, vm) => TheMealDBApiOverviewPage(
         recipes: vm.recipes,
+        searchedRecipes: vm.searchedRecipes,
         onGetRecipe: vm.onGetRecipeAction,
+        onSearchRecipes: vm.onSearchedRecipeAction,
       ),
     );
   }

@@ -1,44 +1,49 @@
+import 'dart:async';
+
+import 'package:recipe_app_flutter/features/the_meal_db_overview/widgets/recipe_list_view.dart';
 import 'package:recipe_app_flutter/features/the_meal_db_overview/widgets/search_recipe_textfield.dart';
+import 'package:recipe_app_flutter/utilities/constant.dart';
 import 'package:recipe_app_flutter/utilities/string_constant.dart';
 import 'package:recipe_app_flutter/utilities/spacing.dart';
 import 'package:recipe_app_flutter/api/model/recipe.dart';
 import 'package:recipe_app_flutter/features/the_meal_db_overview/widgets/add_recipe_modal_form.dart';
-import 'package:recipe_app_flutter/features/the_meal_db_overview/widgets/empty_recipes_view.dart';
-import 'package:recipe_app_flutter/features/the_meal_db_overview/widgets/recipe_card.dart';
 import 'package:flutter/material.dart';
 
 class TheMealDBApiOverviewPage extends StatefulWidget {
   const TheMealDBApiOverviewPage({
     required this.recipes,
+    required this.searchedRecipes,
     required this.onGetRecipe,
+    required this.onSearchRecipes,
     Key? key,
   }) : super(key: key);
 
   final List<Recipe> recipes;
-  final Function(String) onGetRecipe;
+  final List<Recipe> searchedRecipes;
+  final ValueChanged<String> onGetRecipe;
+  final ValueChanged<String> onSearchRecipes;
 
   @override
   State<TheMealDBApiOverviewPage> createState() => _TheMealDBApiOverviewPageState();
 }
 
 class _TheMealDBApiOverviewPageState extends State<TheMealDBApiOverviewPage> {
-  late final TextEditingController searchController;
+  late final TextEditingController _searchController;
+  Timer? _debounce;
 
   @override
   void initState() {
     super.initState();
-    searchController = TextEditingController();
+
+    _searchController = TextEditingController()..addListener(_onSearchChanged);
   }
 
   @override
   void dispose() {
-    super.dispose();
-    searchController.dispose();
-  }
+    _debounce?.cancel();
+    _searchController.dispose();
 
-  @override
-  void didUpdateWidget(covariant TheMealDBApiOverviewPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
+    super.dispose();
   }
 
   @override
@@ -73,49 +78,54 @@ class _TheMealDBApiOverviewPageState extends State<TheMealDBApiOverviewPage> {
                 ],
               ),
               Container(
-                margin: const EdgeInsets.only(top: 20.0, bottom: 40.0),
-                child: MealDBTextField(controller: searchController),
+                margin: const EdgeInsets.only(
+                  top: 20.0,
+                  bottom: 40.0,
+                ),
+                child: MealDBTextField(
+                  controller: _searchController,
+                  onClearSearchField: _clearSearchField,
+                ),
               ),
-              widget.recipes.isNotEmpty
-                  ? Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            yourRecipesLabel,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          const VerticalSpacing(height: 20.0),
-                          Expanded(
-                            child: ListView.separated(
-                              separatorBuilder: (_, __) => const VerticalSpacing(height: 20.0),
-                              itemBuilder: (_, index) {
-                                final recipe = widget.recipes[index];
-                                return RecipeCard(
-                                  recipe: recipe,
-                                  recipeIndex: index,
-                                );
-                              },
-                              itemCount: widget.recipes.length,
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  : EmptyRecipesView(onAddRecipe: _showAddRecipeForm)
+              Expanded(
+                child: RecipeListView(
+                  recipes: _searchController.text.isNotEmpty ? widget.searchedRecipes : widget.recipes,
+                  label: _searchController.text.isNotEmpty ? yourResultsLabel : yourRecipeLabel,
+                  onAddRecipe: _showAddRecipeForm,
+                ),
+              )
             ],
           ),
         ),
       ),
-      floatingActionButton: widget.recipes.isNotEmpty
-          ? FloatingActionButton(
-              onPressed: _showAddRecipeForm,
-              child: const Icon(
-                Icons.add,
-                size: 40.0,
-              ),
-            )
-          : const VerticalSpacing(height: 0.0),
+      floatingActionButton: _searchController.text.isEmpty
+          ? widget.recipes.isNotEmpty
+              ? FloatingActionButton(
+                  onPressed: _showAddRecipeForm,
+                  child: const Icon(
+                    Icons.add,
+                    size: 40.0,
+                  ),
+                )
+              : const VerticalSpacing(height: noHeight)
+          : widget.searchedRecipes.isNotEmpty
+              ? FloatingActionButton(
+                  onPressed: _showAddRecipeForm,
+                  child: const Icon(
+                    Icons.add,
+                    size: 40.0,
+                  ),
+                )
+              : const VerticalSpacing(height: noHeight),
+    );
+  }
+
+  void _onSearchChanged() {
+    if (_searchController.text.isEmpty) return;
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(
+      const Duration(milliseconds: 1000),
+      () => widget.onSearchRecipes(_searchController.text),
     );
   }
 
@@ -130,6 +140,8 @@ class _TheMealDBApiOverviewPageState extends State<TheMealDBApiOverviewPage> {
       ),
     );
   }
+
+  void _clearSearchField() => _searchController.clear();
 
   List<String> _getAllRecipeName() => widget.recipes.map((recipe) => recipe.strMeal.toLowerCase()).toList();
 }
