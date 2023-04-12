@@ -46,7 +46,7 @@ class TheMealDBApiOverviewVm extends Vm {
 
   final List<Recipe> recipes;
   final List<Recipe> searchedRecipes;
-  final Function(String) onGetRecipeAction;
-  final Function(String) onSearchedRecipeAction;
+  final ValueChanged<String> onGetRecipeAction;
+  final ValueChanged<String> onSearchedRecipeAction;
   final VoidCallback onDisposeSearchedRecipe;
 }

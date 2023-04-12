@@ -1,6 +1,6 @@
 import 'package:recipe_app_flutter/utilities/colors.dart';
-import 'package:flutter/material.dart';
 import 'package:recipe_app_flutter/utilities/constant.dart';
+import 'package:flutter/material.dart';
 
 class TheMealDBApiTheme {
   static ThemeData main() {
