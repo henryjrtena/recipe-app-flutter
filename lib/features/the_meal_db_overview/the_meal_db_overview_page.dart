@@ -15,6 +15,7 @@ class TheMealDBApiOverviewPage extends StatefulWidget {
     required this.searchedRecipes,
     required this.onGetRecipe,
     required this.onSearchRecipes,
+    required this.onDisposeSearchedRecipes,
     Key? key,
   }) : super(key: key);
 
@@ -22,6 +23,7 @@ class TheMealDBApiOverviewPage extends StatefulWidget {
   final List<Recipe> searchedRecipes;
   final ValueChanged<String> onGetRecipe;
   final ValueChanged<String> onSearchRecipes;
+  final VoidCallback onDisposeSearchedRecipes;
 
   @override
   State<TheMealDBApiOverviewPage> createState() => _TheMealDBApiOverviewPageState();
@@ -42,6 +44,7 @@ class _TheMealDBApiOverviewPageState extends State<TheMealDBApiOverviewPage> {
   void dispose() {
     _debounce?.cancel();
     _searchController.dispose();
+    widget.onDisposeSearchedRecipes();
 
     super.dispose();
   }
@@ -141,7 +144,11 @@ class _TheMealDBApiOverviewPageState extends State<TheMealDBApiOverviewPage> {
     );
   }
 
-  void _clearSearchField() => _searchController.clear();
+  void _clearSearchField() {
+    _searchController.clear();
+    if (widget.searchedRecipes.isEmpty) return;
+    widget.onDisposeSearchedRecipes();
+  }
 
   List<String> _getAllRecipeName() => widget.recipes.map((recipe) => recipe.strMeal.toLowerCase()).toList();
 }

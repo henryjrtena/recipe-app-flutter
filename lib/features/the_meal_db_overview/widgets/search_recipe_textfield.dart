@@ -31,7 +31,7 @@ class _MealDBTextFieldState extends State<MealDBTextField> {
       decoration: InputDecoration(
         suffixIcon: showCloseButton && widget.maxLines != 5
             ? GestureDetector(
-                onTap: widget.onClearSearchField,
+                onTap: _onClearTextField,
                 child: const Icon(
                   Icons.cancel,
                   color: secondaryColor,
@@ -53,4 +53,9 @@ class _MealDBTextFieldState extends State<MealDBTextField> {
   }
 
   void _onTextFieldChanged(String searchText) => setState(() => showCloseButton = searchText.isNotEmpty);
+
+  void _onClearTextField() {
+    setState(() => showCloseButton = false);
+    widget.onClearSearchField!();
+  }
 }

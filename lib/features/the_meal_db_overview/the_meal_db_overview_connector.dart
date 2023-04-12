@@ -16,6 +16,7 @@ class TheMealDBApiOverviewConnector extends StatelessWidget {
         searchedRecipes: vm.searchedRecipes,
         onGetRecipe: vm.onGetRecipeAction,
         onSearchRecipes: vm.onSearchedRecipeAction,
+        onDisposeSearchedRecipes: vm.onDisposeSearchedRecipe,
       ),
     );
   }

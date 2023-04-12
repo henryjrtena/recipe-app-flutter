@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:recipe_app_flutter/features/the_meal_db_overview/the_meal_db_overview_connector.dart';
 import 'package:recipe_app_flutter/api/model/recipe.dart';
 import 'package:recipe_app_flutter/state/action/recipe_actions.dart';
@@ -11,6 +12,7 @@ class TheMealDBApiOverviewVmFactory extends VmFactory<AppState, TheMealDBApiOver
         searchedRecipes: _getSearchedRecipes,
         onGetRecipeAction: _onGetRecipeAction,
         onSearchedRecipeAction: _onSearchedRecipeAction,
+        onDisposeSearchedRecipe: _onDisposeSearchedRecipeAction,
       );
 
   List<Recipe> get _getRecipes {
@@ -26,6 +28,8 @@ class TheMealDBApiOverviewVmFactory extends VmFactory<AppState, TheMealDBApiOver
   void _onGetRecipeAction(String mealName) => dispatchAsync(GetRecipeAction(mealName: mealName));
 
   void _onSearchedRecipeAction(String searchText) => dispatchAsync(OnSearchRecipeAction(searchText: searchText));
+
+  void _onDisposeSearchedRecipeAction() => dispatchSync(OnDisposeSearchRecipeAction());
 }
 
 class TheMealDBApiOverviewVm extends Vm {
@@ -34,6 +38,7 @@ class TheMealDBApiOverviewVm extends Vm {
     required this.searchedRecipes,
     required this.onGetRecipeAction,
     required this.onSearchedRecipeAction,
+    required this.onDisposeSearchedRecipe,
   }) : super(equals: [
           recipes,
           searchedRecipes,
@@ -43,4 +48,5 @@ class TheMealDBApiOverviewVm extends Vm {
   final List<Recipe> searchedRecipes;
   final Function(String) onGetRecipeAction;
   final Function(String) onSearchedRecipeAction;
+  final VoidCallback onDisposeSearchedRecipe;
 }
