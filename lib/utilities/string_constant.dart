@@ -40,3 +40,6 @@ const mainLabel = 'Main';
 
 const editLabel = 'Edit';
 const deleteLabel = 'Delete';
+const cancelLabel = 'Cancel';
+
+const deleteMessageConfirmation = 'Click "Delete" or "Cancel" to proceed.';

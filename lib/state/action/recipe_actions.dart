@@ -59,3 +59,13 @@ class OnUpdateRecipeNotesAction extends ReduxAction<AppState> {
     return state.copyWith(recipes: recipes, recipeDetails: recipes[recipeIndex]);
   }
 }
+
+// This is responsible for delete a recipe in the recipes list
+class OnDeleteRecipeAction extends ReduxAction<AppState> {
+  @override
+  AppState reduce() {
+    final recipes = [...state.recipes]..remove(state.recipeDetails);
+
+    return state.copyWith(recipes: recipes);
+  }
+}

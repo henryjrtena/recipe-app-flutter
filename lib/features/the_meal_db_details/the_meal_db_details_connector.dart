@@ -1,4 +1,4 @@
-import 'package:recipe_app_flutter/features/the_meal_db_Details/the_meal_db_Details_page.dart';
+import 'package:recipe_app_flutter/features/the_meal_db_details/the_meal_db_details_page.dart';
 import 'package:recipe_app_flutter/features/the_meal_db_details/the_meal_db_details_vm.dart';
 import 'package:recipe_app_flutter/state/action/recipe_actions.dart';
 import 'package:recipe_app_flutter/state/app_state.dart';
@@ -22,6 +22,7 @@ class TheMealDBApiDetailsConnector extends StatelessWidget {
       builder: (_, vm) => TheMealDBApiDetailsPage(
         recipe: vm.recipeDetails,
         onUpdateRecipeNote: vm.onUpdateRecipeNote,
+        onDeleteRecipe: vm.onDeleteRecipe,
       ),
     );
   }

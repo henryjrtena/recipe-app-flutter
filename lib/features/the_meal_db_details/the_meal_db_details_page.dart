@@ -14,11 +14,13 @@ class TheMealDBApiDetailsPage extends StatefulWidget {
   const TheMealDBApiDetailsPage({
     required this.recipe,
     required this.onUpdateRecipeNote,
+    required this.onDeleteRecipe,
     Key? key,
   }) : super(key: key);
 
   final Recipe recipe;
   final Function(String) onUpdateRecipeNote;
+  final VoidCallback onDeleteRecipe;
 
   @override
   State<TheMealDBApiDetailsPage> createState() => _TheMealDBApiDetailsPageState();
@@ -27,6 +29,7 @@ class TheMealDBApiDetailsPage extends StatefulWidget {
 class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
   late final TextEditingController noteController;
   late final Map cardActiveTab;
+  late bool isNoteEmpty;
   late bool isReadOnly;
   late bool isIngredientActive;
   late bool isRecipeActive;
@@ -35,7 +38,8 @@ class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
   @override
   void initState() {
     super.initState();
-    noteController = TextEditingController(text: widget.recipe.note);
+    noteController = TextEditingController(text: widget.recipe.note)..addListener(_updateIsNoteEmpty);
+    isNoteEmpty = widget.recipe.note.isNotEmpty;
     isReadOnly = true;
     isIngredientActive = true;
     isRecipeActive = false;
@@ -44,6 +48,18 @@ class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
       TabEnum.ingredient: IngredientsCard(ingredients: widget.recipe.ingredients),
       TabEnum.recipe: RecipeInstructionsCard(instruction: widget.recipe.strInstructions),
     };
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    noteController.dispose();
+  }
+
+  void _updateIsNoteEmpty() {
+    setState(() {
+      isNoteEmpty = noteController.text.isNotEmpty;
+    });
   }
 
   @override
@@ -81,7 +97,10 @@ class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
                   children: [
                     Align(
                       alignment: Alignment.topRight,
-                      child: PopUpMenuButton(setIsReadyOnly: _setIsReadyOnly),
+                      child: PopUpMenuButton(
+                        setIsReadyOnly: _setIsReadyOnly,
+                        onDeleteRecipe: widget.onDeleteRecipe,
+                      ),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,10 +154,7 @@ class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
                             ),
                             const VerticalSpacing(height: 20.0),
                             ElevatedButton(
-                              onPressed: () {
-                                _setIsReadyOnly(true);
-                                widget.onUpdateRecipeNote(noteController.text);
-                              },
+                              onPressed: isNoteEmpty ? _onUpdateNote : null,
                               style: Button.fluidButton(),
                               child: Text(
                                 updateNotesLabel,
@@ -181,6 +197,12 @@ class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
         ),
       ),
     );
+  }
+
+  void _onUpdateNote() {
+    _setIsReadyOnly(true);
+    if (noteController.text == widget.recipe.note) return;
+    widget.onUpdateRecipeNote(noteController.text);
   }
 
   void _gotoOverviewPage() => Navigator.pop(context);
