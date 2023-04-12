@@ -17,9 +17,12 @@ class TheMealDBApiDetailsConnector extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, TheMealDBApiDetailsVm>(
       vm: () => TheMealDBApiDetailsVmFactory(),
-      onInit: (store) => store.dispatchSync(SetRecipeDetails(recipeIndex: recipeIndex)),
-      onDispose: (store) => store.dispatchSync(OnDisposeRecipeDetails()),
-      builder: (_, vm) => TheMealDBApiDetailsPage(recipe: vm.recipeDetails),
+      onInit: (store) => store.dispatchSync(SetRecipeDetailsAction(recipeIndex: recipeIndex)),
+      onDispose: (store) => store.dispatchSync(OnDisposeRecipeDetailsAction()),
+      builder: (_, vm) => TheMealDBApiDetailsPage(
+        recipe: vm.recipeDetails,
+        onUpdateRecipeNote: vm.onUpdateRecipeNote,
+      ),
     );
   }
 }

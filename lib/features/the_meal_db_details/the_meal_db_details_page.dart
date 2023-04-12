@@ -13,10 +13,12 @@ import 'package:flutter/material.dart';
 class TheMealDBApiDetailsPage extends StatefulWidget {
   const TheMealDBApiDetailsPage({
     required this.recipe,
+    required this.onUpdateRecipeNote,
     Key? key,
   }) : super(key: key);
 
   final Recipe recipe;
+  final Function(String) onUpdateRecipeNote;
 
   @override
   State<TheMealDBApiDetailsPage> createState() => _TheMealDBApiDetailsPageState();
@@ -135,6 +137,7 @@ class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
                             ElevatedButton(
                               onPressed: () {
                                 _setIsReadyOnly(true);
+                                widget.onUpdateRecipeNote(noteController.text);
                               },
                               style: Button.fluidButton(),
                               child: Text(
