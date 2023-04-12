@@ -84,3 +84,9 @@ class OnSearchRecipeAction extends ReduxAction<AppState> {
     return state.copyWith(searchedRecipes: searchedPokemons);
   }
 }
+
+// This Actions performs the disposal of all the search recipe action results.
+class OnDisposeSearchRecipeAction extends ReduxAction<AppState> {
+  @override
+  AppState reduce() => state.copyWith(searchedRecipes: List.empty());
+}

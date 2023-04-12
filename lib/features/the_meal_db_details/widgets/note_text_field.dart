@@ -3,17 +3,14 @@ import 'package:flutter/material.dart';
 class NoteTextField extends StatelessWidget {
   const NoteTextField({
     required this.controller,
-    required this.isReadOnly,
     super.key,
   });
 
   final TextEditingController controller;
-  final bool isReadOnly;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      readOnly: isReadOnly,
       controller: controller,
       maxLines: 5,
       style: Theme.of(context).textTheme.bodyMedium,
