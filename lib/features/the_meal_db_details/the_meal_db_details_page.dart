@@ -1,9 +1,12 @@
 import 'package:recipe_app_flutter/api/model/recipe.dart';
+import 'package:recipe_app_flutter/features/the_meal_db_details/widgets/ingredients_card.dart';
 import 'package:recipe_app_flutter/features/the_meal_db_details/widgets/note_text_field.dart';
 import 'package:recipe_app_flutter/features/the_meal_db_details/widgets/popup_menu_button.dart';
+import 'package:recipe_app_flutter/features/the_meal_db_details/widgets/recipe_instructions_card.dart';
 import 'package:recipe_app_flutter/utilities/colors.dart';
 import 'package:recipe_app_flutter/utilities/spacing.dart';
 import 'package:recipe_app_flutter/utilities/string_constant.dart';
+import 'package:recipe_app_flutter/utilities/tab_enum.dart';
 import 'package:recipe_app_flutter/utilities/widget/button.dart';
 import 'package:flutter/material.dart';
 
@@ -21,18 +24,24 @@ class TheMealDBApiDetailsPage extends StatefulWidget {
 
 class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
   late final TextEditingController noteController;
-
+  late final Map cardActiveTab;
   late bool isReadOnly;
   late bool isIngredientActive;
   late bool isRecipeActive;
+  late TabEnum activeTab;
 
   @override
   void initState() {
     super.initState();
-    noteController = TextEditingController(text: dummyText);
+    noteController = TextEditingController(text: widget.recipe.note);
     isReadOnly = true;
     isIngredientActive = true;
     isRecipeActive = false;
+    activeTab = TabEnum.ingredient;
+    cardActiveTab = {
+      TabEnum.ingredient: IngredientsCard(ingredients: widget.recipe.ingredients),
+      TabEnum.recipe: RecipeInstructionsCard(instruction: widget.recipe.strInstructions),
+    };
   }
 
   @override
@@ -110,12 +119,12 @@ class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Notes',
+                    notesLabel,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const VerticalSpacing(height: 10.0),
                   isReadOnly
-                      ? const Text(dummyText)
+                      ? Text(noteController.text)
                       : Column(
                           children: [
                             NoteTextField(
@@ -129,7 +138,7 @@ class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
                               },
                               style: Button.fluidButton(),
                               child: Text(
-                                'Update Notes',
+                                updateNotesLabel,
                                 style: Theme.of(context).textTheme.titleSmall!.copyWith(color: white),
                               ),
                             )
@@ -142,7 +151,7 @@ class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
                         onPressed: () => _selectTab(TabEnum.ingredient),
                         style: Button.leftBorderedRadius(isIngredientActive),
                         child: Text(
-                          'Ingredients',
+                          ingredientsLabel,
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
@@ -153,7 +162,7 @@ class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
                         onPressed: () => _selectTab(TabEnum.recipe),
                         style: Button.rightBorderedRadius(isRecipeActive),
                         child: Text(
-                          'Recipe',
+                          recipeLabel,
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(color: isRecipeActive ? white : black),
                         ),
@@ -161,35 +170,7 @@ class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
                     ],
                   ),
                   const VerticalSpacing(height: 10.0),
-                  Container(
-                    color: lightGrey,
-                    child: ListView(
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.all(20.0),
-                      children: [
-                        Text(
-                          'Main',
-                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        for (final ingredient in widget.recipe.ingredients)
-                          Container(
-                            margin: const EdgeInsets.only(top: 10.0),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 80.0,
-                                  child: Text(ingredient.measure),
-                                ),
-                                Text(
-                                  ingredient.name,
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          )
-                      ],
-                    ),
-                  )
+                  cardActiveTab[activeTab]
                 ],
               ),
             )
@@ -199,25 +180,15 @@ class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
     );
   }
 
-  void _gotoOverviewPage() {
-    Navigator.pop(context);
-  }
+  void _gotoOverviewPage() => Navigator.pop(context);
 
   void _setIsReadyOnly(bool readOnly) => setState(() => isReadOnly = readOnly);
 
   void _selectTab(TabEnum tabName) {
-    if (tabName == TabEnum.ingredient) {
-      setState(() {
-        isIngredientActive = true;
-        isRecipeActive = false;
-      });
-    } else {
-      setState(() {
-        isIngredientActive = false;
-        isRecipeActive = true;
-      });
-    }
+    setState(() {
+      isIngredientActive = tabName == TabEnum.ingredient;
+      isRecipeActive = !isIngredientActive;
+      activeTab = tabName;
+    });
   }
 }
-
-enum TabEnum { ingredient, recipe }
