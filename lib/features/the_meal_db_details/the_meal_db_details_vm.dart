@@ -28,6 +28,6 @@ class TheMealDBApiDetailsVm extends Vm {
   }) : super(equals: [recipeDetails]);
 
   final Recipe recipeDetails;
-  final Function(String) onUpdateRecipeNote;
+  final ValueChanged<String> onUpdateRecipeNote;
   final VoidCallback onDeleteRecipe;
 }

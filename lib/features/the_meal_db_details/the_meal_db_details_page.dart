@@ -52,14 +52,8 @@ class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
 
   @override
   void dispose() {
-    super.dispose();
     noteController.dispose();
-  }
-
-  void _updateIsNoteEmpty() {
-    setState(() {
-      isNoteEmpty = noteController.text.isNotEmpty;
-    });
+    super.dispose();
   }
 
   @override
@@ -205,6 +199,8 @@ class _TheMealDBApiDetailsPageState extends State<TheMealDBApiDetailsPage> {
   void _gotoOverviewPage() => Navigator.pop(context);
 
   void _setIsReadyOnly(bool readOnly) => setState(() => isReadOnly = readOnly);
+
+  void _updateIsNoteEmpty() => setState(() => isNoteEmpty = noteController.text.isNotEmpty);
 
   void _selectTab(TabEnum tabName) {
     setState(() {

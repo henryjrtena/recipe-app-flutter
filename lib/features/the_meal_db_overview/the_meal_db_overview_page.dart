@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:recipe_app_flutter/features/the_meal_db_overview/widgets/floating_button.dart';
 import 'package:recipe_app_flutter/features/the_meal_db_overview/widgets/recipe_list_view.dart';
 import 'package:recipe_app_flutter/features/the_meal_db_overview/widgets/search_recipe_textfield.dart';
 import 'package:recipe_app_flutter/utilities/constant.dart';
@@ -103,22 +104,10 @@ class _TheMealDBApiOverviewPageState extends State<TheMealDBApiOverviewPage> {
       ),
       floatingActionButton: _searchController.text.isEmpty
           ? widget.recipes.isNotEmpty
-              ? FloatingActionButton(
-                  onPressed: _showAddRecipeForm,
-                  child: const Icon(
-                    Icons.add,
-                    size: 40.0,
-                  ),
-                )
+              ? FloatingButton(showAddRecipeForm: _showAddRecipeForm)
               : const VerticalSpacing(height: noHeight)
           : widget.searchedRecipes.isNotEmpty
-              ? FloatingActionButton(
-                  onPressed: _showAddRecipeForm,
-                  child: const Icon(
-                    Icons.add,
-                    size: 40.0,
-                  ),
-                )
+              ? FloatingButton(showAddRecipeForm: _showAddRecipeForm)
               : const VerticalSpacing(height: noHeight),
     );
   }

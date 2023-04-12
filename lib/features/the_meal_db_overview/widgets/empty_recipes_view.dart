@@ -18,6 +18,7 @@ class EmptyRecipesView extends StatelessWidget {
     return Center(
       child: Column(
         children: [
+          const VerticalSpacing(height: 50.0),
           SvgPicture.asset(noRecipesSVGSource),
           Text(
             makeItYourOwnWayLabel,
