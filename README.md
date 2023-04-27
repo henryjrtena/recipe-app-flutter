@@ -17,7 +17,7 @@ This recipe app project is set to revolutionize the way you cook and plan meals.
 
 ## ScreenShots
 
-![Onboarding Screen](https://user-images.githubusercontent.com/106600653/230117296-8efd920f-3f51-4975-a208-be5efc77509c.png)
+![Onboarding Screen](https://user-images.githubusercontent.com/106600653/234774049-5be89e3d-f86a-489a-bb4a-90e59604bb48.png)
 
 ![Overview Page](https://user-images.githubusercontent.com/106600653/231075452-a88072c8-f4cb-4276-9b33-403b3e0b7a5e.png)
 
