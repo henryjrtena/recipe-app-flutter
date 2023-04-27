@@ -78,10 +78,10 @@ class OnSearchRecipeAction extends ReduxAction<AppState> {
 
   @override
   AppState reduce() {
-    final searchedPokemons =
+    final searchedRecipes =
         state.recipes.where((recipe) => recipe.strMeal.toLowerCase().contains(searchText.toLowerCase())).toList();
 
-    return state.copyWith(searchedRecipes: searchedPokemons);
+    return state.copyWith(searchedRecipes: searchedRecipes);
   }
 }
 

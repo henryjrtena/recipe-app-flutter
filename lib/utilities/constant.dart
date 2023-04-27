@@ -23,3 +23,19 @@ const listOfAllowedRecipe = [
 ];
 
 const noHeight = 0.0;
+
+const mealsIndex = 0;
+
+const minNumberOfIngredients = 1;
+const maxNumberOfIngredients = 20;
+
+const String queryParameters = 's';
+
+const mealsLabel = 'meals';
+const ingredientsLabel = 'strIngredient';
+const measureLabel = 'strMeasure';
+
+const ingredientsText = 'ingredients';
+
+const nameKey = 'name';
+const measureKey = 'measure';
