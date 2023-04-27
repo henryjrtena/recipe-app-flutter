@@ -15,19 +15,13 @@ class TheMealDBApiOverviewVmFactory extends VmFactory<AppState, TheMealDBApiOver
         onDisposeSearchedRecipe: _onDisposeSearchedRecipeAction,
       );
 
-  List<Recipe> get _getRecipes {
-    if (state.recipes.isEmpty) return List.empty();
-    return state.recipes;
-  }
+  List<Recipe> get _getRecipes => state.recipes;
 
-  List<Recipe> get _getSearchedRecipes {
-    if (state.recipes.isEmpty) return List.empty();
-    return state.searchedRecipes;
-  }
+  List<Recipe> get _getSearchedRecipes => state.searchedRecipes;
 
   void _onGetRecipeAction(String mealName) => dispatchAsync(GetRecipeAction(mealName: mealName));
 
-  void _onSearchedRecipeAction(String searchText) => dispatchAsync(OnSearchRecipeAction(searchText: searchText));
+  void _onSearchedRecipeAction(String searchText) => dispatchSync(OnSearchRecipeAction(searchText: searchText));
 
   void _onDisposeSearchedRecipeAction() => dispatchSync(OnDisposeSearchRecipeAction());
 }
