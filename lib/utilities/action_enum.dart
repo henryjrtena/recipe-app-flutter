@@ -1,0 +1,1 @@
+enum RecipeAction { edit, delete }
